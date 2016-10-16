@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -11,12 +12,27 @@ import (
 )
 
 var api *slack.Client
-var Token = "NOTAREALTOKEN"
-var TLDR = "+tldr"
+
+var Token string
+var TLDR string
+
+func init() {
+	flag.StringVar(&Token, "token", "", "Slack API bot token (can also be set with SLACK_TLDR_TOKEN)")
+	flag.StringVar(&TLDR, "command", "+tldr", "Command to type in Slack to trigger TLDR functions (default: +tldr)")
+}
 
 func main() {
+	flag.Parse()
+	if t := os.Getenv("SLACK_TLDR_TOKEN"); t != "" {
+		Token = t
+	}
+	if Token == "" {
+		fmt.Println("SLACK_TLDR_TOKEN was not set - use -token or set env var")
+		return
+	}
+
+	logger := log.New(os.Stdout, "slack-tldr: ", log.Lshortfile|log.LstdFlags)
 	api = slack.New(Token)
-	logger := log.New(os.Stdout, "slack-bot: ", log.Lshortfile|log.LstdFlags)
 	slack.SetLogger(logger)
 	api.SetDebug(false)
 

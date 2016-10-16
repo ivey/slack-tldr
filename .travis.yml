@@ -1,5 +1,14 @@
 language: go
-
 go:
-  - 1.6
-  - tip
+- 1.6
+- tip
+deploy:
+  provider: releases
+  api_key:
+    secure: ePbh+O/jqKC8nmQHKLJi9ZL8ZMAb2qRSuQKdBt9J84bmBE4KAcJp6/338279/C48xlUR/9Lt/5zmwWgYY90owz8vckDnNOL+5E+2o50la1O4t3C0mQr/fDs65lsTfRirdRmFX1tw3NFz9J8uJ8cLlekxNC9SqtBJ2biaDOIDnJMcLErzV85g8m2nVhAkGYgaJcJ5C1tOrR/4DxHzL5FVIGghj3BE0+CVUAFjoaFUIQ1Hg3e0JwfRHuS8liJh7DNivM5CDvXnso/Cs78A+gW/WLux9UH2uQwWlrDcz3Rd3hGZPQj1zaHsVcmhVg4TS96sjGofTL099CabENrVFzOzY+L84lieRpeSC8dW89kKZFFIgwm4u07DSq1YKvd8n3RrK9qr+kNfMdP5bdL2JCqAi6ACRbPx9x8xdFNvpwufa2d/R4Oadycjo7PyP4xSMpo/jyKEDnPgtbvhTnVKdQZEmdaxqhaZH3Iy9I4rP6eHVV5Ppmlti1yvfHOZWGrfe871yUUc5nWQFCrulZ+rYAev2XwRmYSe4Cqh3lYw5LQ43aL6PYJS2sdhngtO9reuHFzH9BL+MO7Nl9HMskAOrgtsGeYAS4iwHa+E/SN7lpnQXrdTjiS1L7DS/muacYhMzDfcBOFcRyI/dq5uQo0hPe3/cZmxM1FmhekpinnPyaYvKho=
+  file: slack-tldr.linux.amd64.tgz
+  skip_cleanup: true
+  on:
+    go: 1.6
+    tag: true
+    repo: ivey/slack-tldr
