@@ -18,7 +18,7 @@ var TLDR string
 
 func init() {
 	flag.StringVar(&Token, "token", "", "Slack API bot token (can also be set with SLACK_TLDR_TOKEN)")
-	flag.StringVar(&TLDR, "command", "+tldr", "Command to type in Slack to trigger TLDR functions (default: +tldr)")
+	flag.StringVar(&TLDR, "command", "+tldr", "Command to type in Slack to trigger TLDR functions")
 }
 
 func main() {
