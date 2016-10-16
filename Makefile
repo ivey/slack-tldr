@@ -15,7 +15,7 @@ slack-tldr.linux:
 
 slack-tldr.linux.amd64.tgz: slack-tldr.linux
 	mv slack-tldr.linux slack-tldr
-	tar cvfz slack-tldr.linux.amd64.tgz slack-tldr
+	tar cvfz slack-tldr.linux.amd64.tgz slack-tldr slack-tldr.service
 	rm slack-tldr
 
 test:
