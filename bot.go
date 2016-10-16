@@ -17,6 +17,8 @@ var Token string
 var TLDR string
 var Username string
 var Emoji string
+var Version = "dev"
+var showVersion = flag.Bool("version", false, "show version and exit")
 
 func init() {
 	flag.StringVar(&Token, "token", "", "Slack API bot token (can also be set with SLACK_TLDR_TOKEN)")
@@ -27,6 +29,12 @@ func init() {
 
 func main() {
 	flag.Parse()
+
+	if *showVersion {
+		fmt.Println("slack-tldr version " + Version + "\nCopyright 2016 Michael D. Ivey <ivey@gweezlebur.com>")
+		return
+	}
+
 	if t := os.Getenv("SLACK_TLDR_TOKEN"); t != "" {
 		Token = t
 	}
