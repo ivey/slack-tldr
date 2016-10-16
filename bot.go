@@ -15,10 +15,14 @@ var api *slack.Client
 
 var Token string
 var TLDR string
+var Username string
+var Emoji string
 
 func init() {
 	flag.StringVar(&Token, "token", "", "Slack API bot token (can also be set with SLACK_TLDR_TOKEN)")
 	flag.StringVar(&TLDR, "command", "+tldr", "Command to type in Slack to trigger TLDR functions")
+	flag.StringVar(&Username, "username", "TL;DR", "Username for the bot")
+	flag.StringVar(&Emoji, "emoji", ":stopwatch:", "Emoji icon for the bot")
 }
 
 func main() {
@@ -43,7 +47,6 @@ Loop:
 	for {
 		select {
 		case msg := <-rtm.IncomingEvents:
-			fmt.Print("Event Received: ")
 			switch ev := msg.Data.(type) {
 
 			case *slack.MessageEvent:
@@ -69,8 +72,8 @@ Loop:
 func handleTLDR(ev *slack.MessageEvent) {
 	params := slack.PostMessageParameters{
 		AsUser:    false,
-		Username:  "TL;DR",
-		IconEmoji: ":stopwatch:",
+		Username:  Username,
+		IconEmoji: Emoji,
 	}
 
 	message := strings.TrimSpace(ev.Text)
@@ -86,7 +89,6 @@ func handleTLDR(ev *slack.MessageEvent) {
 	}
 
 	if message == TLDR {
-		fmt.Printf("\n")
 		msg := ""
 		for i, item := range listPins {
 			msg += fmt.Sprintf("*%d*. %s", i+1, item.Message.Text)
@@ -115,7 +117,6 @@ func handleTLDR(ev *slack.MessageEvent) {
 		delete := listPins[pos-1]
 		msgRef := slack.NewRefToMessage(ev.Channel, delete.Message.Timestamp)
 		err = api.RemovePin(ev.Channel, msgRef)
-		fmt.Printf("\n\n\n\n%#v\n\n\n\n%#v\n\n\n\n", msgRef, delete.Message)
 		if err != nil {
 			fmt.Printf("Error remove pin: %s\n", err)
 			return
